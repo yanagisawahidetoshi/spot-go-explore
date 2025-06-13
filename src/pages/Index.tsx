@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { MapPin, Play, Pause, Settings, List } from 'lucide-react';
+import { MapPin, Settings, List } from 'lucide-react';
 import MapView from '@/components/MapView';
 import SpotDetails from '@/components/SpotDetails';
 import LanguageSelector from '@/components/LanguageSelector';
@@ -20,7 +20,6 @@ const Index = () => {
   const { spots, loading } = useTouristSpots(userLocation);
 
   useEffect(() => {
-    // Check if language was previously selected
     const savedLanguage = localStorage.getItem('@go-spot-language');
     if (!savedLanguage) {
       setShowLanguageSelector(true);
@@ -58,15 +57,15 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-emerald-50 to-blue-100">
+    <div className="min-h-screen bg-spot-surface">
       {/* Header */}
-      <div className="relative z-10 bg-white/80 backdrop-blur-md border-b border-blue-200">
+      <div className="relative z-10 bg-spot-surface-elevated border-b border-border/50 shadow-spot-sm">
         <div className="flex items-center justify-between p-4">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-lg flex items-center justify-center">
-              <MapPin className="w-5 h-5 text-white" />
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-spot-primary rounded-lg flex items-center justify-center">
+              <MapPin className="w-4 h-4 text-white" />
             </div>
-            <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
+            <h1 className="text-xl font-bold text-spot-primary">
               GO! SPOT
             </h1>
           </div>
@@ -76,7 +75,7 @@ const Index = () => {
               variant="ghost"
               size="sm"
               onClick={() => setIsMapView(!isMapView)}
-              className="text-blue-600 hover:text-blue-700"
+              className="text-spot-secondary hover:text-spot-secondary/80 hover:bg-spot-secondary/10 h-9 w-9 p-0 rounded-lg"
             >
               {isMapView ? <List className="w-4 h-4" /> : <MapPin className="w-4 h-4" />}
             </Button>
@@ -84,7 +83,7 @@ const Index = () => {
               variant="ghost"
               size="sm"
               onClick={() => setShowLanguageSelector(true)}
-              className="text-blue-600 hover:text-blue-700"
+              className="text-spot-secondary hover:text-spot-secondary/80 hover:bg-spot-secondary/10 h-9 w-9 p-0 rounded-lg"
             >
               <Settings className="w-4 h-4" />
             </Button>
@@ -94,21 +93,24 @@ const Index = () => {
 
       {/* Permission Request */}
       {!hasPermission && (
-        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-20">
-          <Card className="mx-4 max-w-sm p-6 text-center animate-fade-in">
-            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-20">
+          <Card className="mx-6 max-w-sm p-8 text-center bg-spot-surface-elevated shadow-spot-lg border-0 animate-scale-in">
+            <div className="w-16 h-16 bg-spot-primary rounded-2xl flex items-center justify-center mx-auto mb-6">
               <MapPin className="w-8 h-8 text-white" />
             </div>
-            <h2 className="text-lg font-semibold mb-2">
+            <h2 className="text-xl font-semibold text-spot-primary mb-3">
               {currentLanguage === 'ja' ? '位置情報を許可' : 'Allow Location Access'}
             </h2>
-            <p className="text-muted-foreground mb-4 text-sm">
+            <p className="text-spot-muted mb-8 text-sm leading-relaxed">
               {currentLanguage === 'ja' 
                 ? 'GO! SPOTは近くの観光スポットを表示するために位置情報が必要です'
                 : 'GO! SPOT needs your location to show nearby tourist spots'
               }
             </p>
-            <Button onClick={handleGetLocation} className="w-full bg-gradient-to-r from-blue-500 to-emerald-500 hover:from-blue-600 hover:to-emerald-600">
+            <Button 
+              onClick={handleGetLocation} 
+              className="w-full h-12 bg-spot-primary hover:bg-spot-primary/90 text-white rounded-xl font-medium shadow-spot-sm"
+            >
               {currentLanguage === 'ja' ? '位置情報を許可' : 'Allow Location'}
             </Button>
           </Card>
@@ -129,10 +131,10 @@ const Index = () => {
           ) : (
             <div className="p-4 space-y-4">
               <div className="text-center py-8">
-                <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                <h2 className="text-2xl font-bold text-spot-primary mb-3">
                   {currentLanguage === 'ja' ? '近くのスポット' : 'Nearby Spots'}
                 </h2>
-                <p className="text-muted-foreground">
+                <p className="text-spot-muted">
                   {currentLanguage === 'ja' 
                     ? `${spots.length}件のスポットが見つかりました`
                     : `Found ${spots.length} spots nearby`
@@ -141,39 +143,39 @@ const Index = () => {
               </div>
               
               {loading ? (
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {[1, 2, 3].map((i) => (
-                    <Card key={i} className="p-4 animate-pulse">
+                    <Card key={i} className="p-4 animate-pulse bg-spot-surface-elevated border-0 shadow-spot-sm rounded-2xl">
                       <div className="flex space-x-4">
-                        <div className="w-16 h-16 bg-gray-200 rounded-lg"></div>
-                        <div className="flex-1 space-y-2">
-                          <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-                          <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                        <div className="w-16 h-16 bg-muted rounded-xl"></div>
+                        <div className="flex-1 space-y-3">
+                          <div className="h-4 bg-muted rounded w-3/4"></div>
+                          <div className="h-3 bg-muted rounded w-1/2"></div>
                         </div>
                       </div>
                     </Card>
                   ))}
                 </div>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {spots.map((spot) => (
                     <Card 
                       key={spot.id} 
-                      className="p-4 hover:shadow-lg transition-all duration-200 cursor-pointer border-l-4 border-l-blue-500"
+                      className="p-4 hover:shadow-spot-md transition-all duration-200 cursor-pointer bg-spot-surface-elevated border-0 shadow-spot-sm rounded-2xl animate-fade-in"
                       onClick={() => handleSpotSelect(spot)}
                     >
                       <div className="flex items-center space-x-4">
-                        <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-emerald-100 rounded-lg flex items-center justify-center">
-                          <MapPin className="w-8 h-8 text-blue-600" />
+                        <div className="w-16 h-16 bg-spot-primary/10 rounded-xl flex items-center justify-center">
+                          <MapPin className="w-8 h-8 text-spot-primary" />
                         </div>
                         <div className="flex-1">
-                          <h3 className="font-semibold text-gray-800 mb-1">{spot.name}</h3>
-                          <p className="text-sm text-muted-foreground mb-2">{spot.category}</p>
-                          <div className="flex items-center space-x-2">
-                            <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
+                          <h3 className="font-semibold text-spot-primary mb-1 text-base">{spot.name}</h3>
+                          <p className="text-sm text-spot-muted mb-3">{spot.category}</p>
+                          <div className="flex items-center space-x-3">
+                            <span className="text-xs bg-spot-primary/10 text-spot-primary px-3 py-1 rounded-full font-medium">
                               ⭐ {spot.rating}
                             </span>
-                            <span className="text-xs text-muted-foreground">
+                            <span className="text-xs text-spot-muted">
                               {spot.distance}m away
                             </span>
                           </div>
@@ -187,14 +189,14 @@ const Index = () => {
           )
         ) : (
           <div className="flex-1 flex items-center justify-center p-8">
-            <div className="text-center">
-              <div className="w-24 h-24 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="text-center max-w-sm">
+              <div className="w-24 h-24 bg-spot-primary rounded-3xl flex items-center justify-center mx-auto mb-8">
                 <MapPin className="w-12 h-12 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              <h2 className="text-2xl font-bold text-spot-primary mb-4">
                 {currentLanguage === 'ja' ? 'GO! SPOTへようこそ' : 'Welcome to GO! SPOT'}
               </h2>
-              <p className="text-muted-foreground max-w-md">
+              <p className="text-spot-muted leading-relaxed">
                 {currentLanguage === 'ja' 
                   ? '音声ガイド付きで近くの観光スポットを発見しましょう'
                   : 'Discover nearby tourist spots with audio guidance'

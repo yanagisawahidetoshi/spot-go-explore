@@ -9,29 +9,29 @@ interface LanguageSelectorProps {
 
 const LanguageSelector: React.FC<LanguageSelectorProps> = ({ onLanguageSelect }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-emerald-50 to-blue-100 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md p-8 text-center animate-fade-in">
-        <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6">
-          <span className="text-2xl text-white font-bold">GO!</span>
+    <div className="min-h-screen bg-spot-surface flex items-center justify-center p-6">
+      <Card className="w-full max-w-sm p-8 text-center bg-spot-surface-elevated shadow-spot-lg border-0 animate-scale-in">
+        <div className="w-16 h-16 bg-spot-primary rounded-2xl flex items-center justify-center mx-auto mb-8">
+          <span className="text-xl font-bold text-white">GO!</span>
         </div>
         
-        <h1 className="text-2xl font-bold text-gray-800 mb-2">GO! SPOT</h1>
-        <p className="text-muted-foreground mb-8">Choose your language / 言語を選択</p>
+        <h1 className="text-2xl font-bold text-spot-primary mb-2">GO! SPOT</h1>
+        <p className="text-spot-muted mb-10 text-sm">Choose your language / 言語を選択</p>
         
-        <div className="space-y-4">
+        <div className="space-y-3">
           <Button
             onClick={() => onLanguageSelect('en')}
-            className="w-full h-14 text-lg bg-gradient-to-r from-blue-500 to-emerald-500 hover:from-blue-600 hover:to-emerald-600 transition-all duration-200"
+            className="w-full h-12 text-base bg-spot-primary hover:bg-spot-primary/90 text-white border-0 rounded-xl font-medium shadow-spot-sm transition-all duration-200 hover:shadow-spot-md"
           >
-            <span className="mr-3 text-xl">🇬🇧</span>
+            <span className="mr-3 text-lg">🇬🇧</span>
             English
           </Button>
           
           <Button
             onClick={() => onLanguageSelect('ja')}
-            className="w-full h-14 text-lg bg-gradient-to-r from-blue-500 to-emerald-500 hover:from-blue-600 hover:to-emerald-600 transition-all duration-200"
+            className="w-full h-12 text-base bg-spot-primary hover:bg-spot-primary/90 text-white border-0 rounded-xl font-medium shadow-spot-sm transition-all duration-200 hover:shadow-spot-md"
           >
-            <span className="mr-3 text-xl">🇯🇵</span>
+            <span className="mr-3 text-lg">🇯🇵</span>
             日本語
           </Button>
         </div>
